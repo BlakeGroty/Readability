@@ -1,0 +1,50 @@
+﻿<Window x:Class="Readability.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Readability"
+        mc:Ignorable="d"
+        Height="{Binding Source={x:Static local:Settings.Default}, Path=DefaultHeight}"
+        Width="{Binding Source={x:Static local:Settings.Default}, Path=DefaultWidth}"
+        ResizeMode="NoResize" WindowStyle="SingleBorderWindow"
+        BorderBrush="White">
+    <Window.Resources>
+        <ResourceDictionary Source="../ControlResources.xaml"/>
+    </Window.Resources>
+    
+    <Grid x:Name="Grid_Main">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="15"/>
+            <ColumnDefinition Width="5*" MinWidth="300"/>
+            <ColumnDefinition Width="3*" MinWidth="200"/>
+            <ColumnDefinition Width="15"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="15"/>
+        </Grid.RowDefinitions>
+
+        <Label Content="{Binding Source={x:Static local:Settings.Default}, Path=AppName}"
+               FontSize="30" FontFamily="Franklin" FontWeight="SemiBold" Typography.Capitals="SmallCaps"
+               Padding="0" Margin="20,0,0,10"
+               Grid.Row="0" Grid.Column="1"/>
+
+        <DockPanel Grid.Row="0" Grid.RowSpan="5" Grid.Column="1" VerticalAlignment="Center" Margin="35,0,0,0" LastChildFill="False">
+            <Button Style="{StaticResource TitleButton}" DockPanel.Dock="Top"
+                    x:Name="Button_NewAnalysis" Content="New Multi-file Analysis" Click="Button_NewAnalysis_Click"/>
+            <Button Style="{StaticResource TitleButton}" DockPanel.Dock="Top" 
+                    x:Name="Button_SingleAnalysis" Content="New Single File Analysis" Click="Button_SingleAnalysis_Click"/>
+            <Button Style="{StaticResource TitleButton}" DockPanel.Dock="Top"
+                    x:Name="Button_OpenFile" Content="Open File" Click="Button_OpenFile_Click"/>
+        </DockPanel>
+
+        <ListBox x:Name="ListBox_Recents" Grid.Row="1" Grid.Column="2"/>
+        <TextBlock x:Name="TextBlock_NoRecentsFound" Text="No Recent Analyses"
+                   FontSize="15" FontFamily="Franklin" FontWeight="ExtraLight" Foreground="DarkSlateGray"
+                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Grid.Row="1" Grid.Column="2"
+                   Visibility="Visible"/>
+    </Grid>
+</Window>
