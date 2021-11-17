@@ -118,8 +118,8 @@ namespace Readability {
         ///also
         ///always
         ///am
-        ///America
-        ///American
+        ///america
+        ///american
         ///among
         ///amount
         ///an
