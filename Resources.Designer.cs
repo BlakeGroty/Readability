@@ -65,54 +65,54 @@ namespace Readability {
         ///able
         ///aboard
         ///about
-        ///above 
-        ///absent 
-        ///accept 
-        ///accident 
-        ///account 
-        ///ache 
-        ///aching 
-        ///acorn 
-        ///acre 
-        ///across 
-        ///act 
-        ///acts 
-        ///add 
-        ///address 
-        ///admire 
-        ///adventure 
-        ///afar 
+        ///above
+        ///absent
+        ///accept
+        ///accident
+        ///account
+        ///ache
+        ///aching
+        ///acorn
+        ///acre
+        ///across
+        ///act
+        ///acts
+        ///add
+        ///address
+        ///admire
+        ///adventure
+        ///afar
         ///afraid
-        ///after 
-        ///afternoon 
-        ///afterward 
-        ///afterwards 
-        ///again 
+        ///after
+        ///afternoon
+        ///afterward
+        ///afterwards
+        ///again
         ///against
-        ///age 
-        ///aged 
-        ///ago 
-        ///agree 
-        ///ah 
-        ///ahead 
-        ///aid 
-        ///aim 
-        ///air 
-        ///airfield 
-        ///airplane 
-        ///airport 
-        ///airship 
-        ///airy 
-        ///alarm 
-        ///alike 
-        ///alive 
-        ///all 
-        ///alley 
-        ///alligator 
-        ///allow 
-        ///almost 
-        ///alone 
-        ///along 
+        ///age
+        ///aged
+        ///ago
+        ///agree
+        ///ah
+        ///ahead
+        ///aid
+        ///aim
+        ///air
+        ///airfield
+        ///airplane
+        ///airport
+        ///airship
+        ///airy
+        ///alarm
+        ///alike
+        ///alive
+        ///all
+        ///alley
+        ///alligator
+        ///allow
+        ///almost
+        ///alone
+        ///along
         ///aloud
         ///already
         ///also
@@ -125,7 +125,13 @@ namespace Readability {
         ///an
         ///and
         ///angel
-        /// [rest of string was truncated]&quot;;.
+        ///anger
+        ///angry
+        ///animal
+        ///another
+        ///answer
+        ///ant
+        ///an [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ChallEasyWords {
             get {
@@ -141,6 +147,7 @@ namespace Readability {
         ///ance
         ///ate
         ///dom
+        ///ed
         ///en
         ///ence
         ///er
