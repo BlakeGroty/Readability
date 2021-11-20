@@ -78,5 +78,23 @@ namespace Readability {
                 return ((string)(this["MultiFileAnalysisExtension"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("./Resources/EnglishSD.nbin")]
+        public string SentenceModelLocation {
+            get {
+                return ((string)(this["SentenceModelLocation"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("./Resources/EnglishPOS.nbin")]
+        public string PosModelLocation {
+            get {
+                return ((string)(this["PosModelLocation"]));
+            }
+        }
     }
 }
