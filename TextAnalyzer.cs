@@ -84,27 +84,35 @@ namespace Readability
 
         // Helper methods -----------------------------------------------------------------------------------
         // TODO: Improve accuracy
-        private int SyllableCount(string word)
+        public static int SyllableCount(string word)
         {
             // https://codereview.stackexchange.com/questions/9972/syllable-counting-function
             word = word.ToLower().Trim();
             bool lastWasVowel = false;
             char[] vowels = new char[] { 'a', 'e', 'i', 'o', 'u', 'y' };
-            int count = 0;
 
-            foreach(char c in word)
+            int count = 0;
+            for(int i = 0; i < word.Length; ++i)
+            {
+                char c = word[i];
                 if(vowels.Contains(c))
                 {
                     if(!lastWasVowel)
                         count++;
                     lastWasVowel = true;
+
+                    if(c == 'y' && i != 0)
+                        lastWasVowel = false;
                 }
                 else
                     lastWasVowel = false;
+            }
 
-            if((word.EndsWith("e") || (word.EndsWith("es") || word.EndsWith("ed")))
-                  && !word.EndsWith("le"))
+            if(count > 1 && (word.EndsWith("e") || word.EndsWith("es") || word.EndsWith("ed")) && !word.EndsWith("le"))
                 count--;
+
+            if(word.EndsWith("ia") || word.EndsWith("io"))
+                count++;
 
             return count;
         }
