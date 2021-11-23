@@ -69,15 +69,7 @@ namespace Readability
         // TODO: Verify implementation
         public double DaleChallGrade 
         {
-            get
-            {
-                for(int i = 5; i <= 10; ++i)
-                    if(DaleChallScore <= i + 0.5)
-                        return (i - 5) * 2 + i;
-                    else if(DaleChallScore < i + 1)
-                        return (i - 5) * 2 + i + 1;
-                return 4;
-            }
+            get => DaleChallGradeLevel(DaleChallScore);
         }
         public double GunningFog 
         { get => 0.4 * (Words / Sentences + 100 * WordsInText.Count(w => SyllableCount(w) >= 3) / Words); }
@@ -115,6 +107,16 @@ namespace Readability
                 count++;
 
             return count;
+        }
+
+        public static double DaleChallGradeLevel(double score)
+        {
+            if(score > 25 || score < -10) // Chosen arbitrarily
+                throw new ArgumentException($"Value \"{score}\" outside of tolerated range");
+
+            if(score < 5)  return 4;
+            if(score > 10) return 15;
+            return 2 * score - 5;
         }
     }
 }
