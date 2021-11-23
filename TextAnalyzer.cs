@@ -19,24 +19,48 @@ namespace Readability
             => Text = text;
 
 
+
         // Private helper variables -------------------------------------------------------------------------
         private static readonly EnglishMaximumEntropySentenceDetector SentenceDetector = new EnglishMaximumEntropySentenceDetector(Settings.Default.SentenceModelLocation);
         
-        // Dale-Chall list of easy words
+        /// <summary>
+        /// Dale-Chall's "Easy words" list
+        /// </summary>
         private static readonly string[] EasyWords = Resources.ChallEasyWords.Split('\n').Select(s => s.Trim()).ToArray();
-        // Suffixes to try appending to words in easyWords for a more complete list
+        /// <summary>
+        /// English word suffixes to try when looking for Dale-Chall easy words
+        /// </summary>
         private static readonly string[] Suffixes = Resources.WordSuffixes.Split('\n').Select(s => s.Trim()).ToArray();
-        // Full english dictionary -- only words found in this dictionary will be considered for difficult words
+        /// <summary>
+        /// Full English dictionary -- only words found in this dictionary will be considered for difficult words
+        /// </summary>
         private static readonly string[] RealWords = File.ReadAllLines("./Resources/words.txt");
         
+
+
         // Public variables ---------------------------------------------------------------------------------
+        /// <summary>
+        /// Content to analyze. All relevant values in this class reflect the current value.
+        /// </summary>
         public string Text { get; set; }
 
+        /// <summary>
+        /// Number of words in text
+        /// </summary>
         public int Words { get => WordsInText.Length; }
+        
+        /// <summary>
+        /// All words in text individually
+        /// </summary>
         public string[] WordsInText 
         { get => Regex.Matches(Text, @"(?:\b)\w+(?:\b)").Cast<Match>().Select(m => m.Value).ToArray(); }
+        
+        /// <summary>
+        /// All sentences in text individually
+        /// </summary>
         public int Sentences 
         { get => SentenceDetector.SentenceDetect(Text).Length; }
+        
         public double FleschKincaidGrade 
         {
             get
@@ -45,8 +69,9 @@ namespace Readability
                 return 0.39 * Words / Sentences + 11.8 * WordsInText.Sum(w => SyllableCount(w)) / Words - 15.59;
             }
         }
+        
         // TODO: Optimize, write docs
-        public double DaleChallScore
+        public double DaleChallScore 
         {
             get
             {
@@ -66,13 +91,14 @@ namespace Readability
                 return score;
             }
         }
-        // TODO: Verify implementation
+        
         public double DaleChallGrade 
-        {
-            get => DaleChallGradeLevel(DaleChallScore);
-        }
+        { get => DaleChallGradeLevel(DaleChallScore); }
+        
         public double GunningFog 
         { get => 0.4 * (Words / Sentences + 100 * WordsInText.Count(w => SyllableCount(w) >= 3) / Words); }
+
+
 
         // Helper methods -----------------------------------------------------------------------------------
         // TODO: Improve accuracy
@@ -109,6 +135,11 @@ namespace Readability
             return count;
         }
 
+        /// <summary>
+        /// Converts a Dale-Chall readability score to its US grade level equivalent
+        /// </summary>
+        /// <param name="score">Score to convert</param>
+        /// <returns>Approximate grade level as double</returns>
         public static double DaleChallGradeLevel(double score)
         {
             if(score > 25 || score < -10) // Chosen arbitrarily
