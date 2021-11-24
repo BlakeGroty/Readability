@@ -1,7 +1,6 @@
 ﻿using OpenNLP.Tools.SentenceDetect;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -62,13 +61,7 @@ namespace Readability
         { get => SentenceDetector.SentenceDetect(Text).Length; }
         
         public double FleschKincaidGrade 
-        {
-            get
-            {
-                Debug.WriteLine($"{Words} {Sentences} {WordsInText.Sum(w => SyllableCount(w))} {WordsInText.Count(w => SyllableCount(w) >= 3)}");
-                return 0.39 * Words / Sentences + 11.8 * WordsInText.Sum(w => SyllableCount(w)) / Words - 15.59;
-            }
-        }
+        { get => 0.39 * Words / Sentences + 11.8 * WordsInText.Sum(w => SyllableCount(w)) / Words - 15.59; }
         
         // TODO: Optimize, write docs
         public double DaleChallScore 
