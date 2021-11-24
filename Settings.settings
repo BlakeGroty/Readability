@@ -20,5 +20,11 @@
     <Setting Name="MultiFileAnalysisExtension" Type="System.String" Scope="Application">
       <Value Profile="(Default)">wram</Value>
     </Setting>
+    <Setting Name="SentenceModelLocation" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">./Resources/EnglishSD.nbin</Value>
+    </Setting>
+    <Setting Name="PosModelLocation" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">./Resources/EnglishPOS.nbin</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
