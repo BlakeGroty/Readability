@@ -390,3 +390,4 @@ FodyWeavers.xsd
 *.csproj
 *.config
 *.sln
+.editorconfig
