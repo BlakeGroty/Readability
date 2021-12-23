@@ -36,12 +36,15 @@
                     x:Name="Button_NewAnalysis" Content="New Multi-file Analysis" Click="Button_NewAnalysis_Click"/>
             <Button Style="{StaticResource TitleButton}" DockPanel.Dock="Top" 
                     x:Name="Button_SingleAnalysis" Content="New Single File Analysis" Click="Button_SingleAnalysis_Click"/>
-            <Button Style="{StaticResource TitleButton}" DockPanel.Dock="Top"
-                    x:Name="Button_OpenFile" Content="Open File" Click="Button_OpenFile_Click"/>
         </DockPanel>
 
-        <ListBox x:Name="ListBox_Recents" Grid.Row="1" Grid.Column="2"/>
-        <TextBlock x:Name="TextBlock_NoRecentsFound" Text="No Recent Analyses"
+        <DockPanel Grid.Row="1" Grid.Column="2" LastChildFill="True">
+            <Button DockPanel.Dock="Bottom" Content="Import +" Height="Auto"
+                    BorderThickness="1,0,1,1" Padding="2"
+                    Click="Button_Import_Click" x:Name="Button_Import"/>
+            <ListBox DockPanel.Dock="Top" VerticalAlignment="Stretch" MouseDoubleClick="ListBox_Files_MouseDoubleClick" x:Name="ListBox_Files"/>
+        </DockPanel>
+        <TextBlock x:Name="TextBlock_NoRecentsFound" Text="No Analyses"
                    FontSize="15" FontFamily="Franklin" FontWeight="ExtraLight" Foreground="DarkSlateGray"
                    HorizontalAlignment="Center" VerticalAlignment="Center"
                    Grid.Row="1" Grid.Column="2"
