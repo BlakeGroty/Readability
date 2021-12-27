@@ -57,7 +57,7 @@ namespace Readability
         private void Watcher_Error(object sender, ErrorEventArgs e)
         {
             watcher.Dispose();
-            Debug.WriteLine("File watcher encountered an error");
+            Debug.WriteLine(e);
         }
 
         private void AnalysisPathFiles_Updated(object sender, FileSystemEventArgs e)
@@ -93,21 +93,28 @@ namespace Readability
             if(result == true)
             {
                 string file = fileDialog.FileName;
-                
-                // TODO: Copy file to program directory
 
-                string fileExt = file.Substring(file.LastIndexOf('.') + 1);
-                if(fileExt.Equals(Settings.Default.SingleFileAnalysisExtension))
+                //string fileExt = file.Substring(file.LastIndexOf('.') + 1);
+                //if(fileExt.Equals(Settings.Default.SingleFileAnalysisExtension))
+                //{
+                //    SingleFileAnalysis newWindow = new SingleFileAnalysis();
+                //    newWindow.Show();
+                //}
+                //else if(fileExt.Equals(Settings.Default.MultiFileAnalysisExtension))
+                //    throw new NotImplementedException("Multi file analysis not yet implemented");
+                //else
+                //    throw new ArgumentException("File does not have valid extension");
+
+                string newFile = Path.Combine(analysisPath, fileDialog.SafeFileName);
+                if(File.Exists(newFile))
                 {
-                    SingleFileAnalysis newWindow = new SingleFileAnalysis();
-                    newWindow.Activate();
-                    Debug.WriteLine("Activated new window");
+                    FileExistsPopup popup = new FileExistsPopup(newFile);
+                    popup.Owner = this;
+                    bool? complete = popup.ShowDialog();
+                    if(popup.Action.Equals("rename") && complete == true)
+                        newFile = Path.Combine(analysisPath, popup.NewName);
                 }
-                else if(fileExt.Equals(Settings.Default.MultiFileAnalysisExtension))
-                    throw new NotImplementedException("Multi file analysis not yet implemented");
-                else
-                    throw new ArgumentException("File does not have valid extension");
-                Close();
+                File.Copy(file, newFile, true);
             }
         }
 
