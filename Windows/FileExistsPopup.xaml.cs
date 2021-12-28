@@ -23,10 +23,12 @@ namespace Readability.Windows
     {
         public string Action { get; private set; }
         public string NewName { get; private set; }
+        private string OriginalFile { get; set; }
 
         public FileExistsPopup(string file)
         {
             InitializeComponent();
+            OriginalFile = file;
             Title = $"{Settings.Default.AppName} - File already exists";
             Action = "none";
             NewName = "none";
@@ -81,9 +83,11 @@ namespace Readability.Windows
             bool isValidName = !string.IsNullOrEmpty(newName) && 
                                newName.IndexOfAny(Path.GetInvalidFileNameChars()) < 0;
             bool fileExists = File.Exists(path);
-            
+
             if(isValidName && !fileExists)
             {
+                if(!Path.GetExtension(newName).Equals(Path.GetExtension(OriginalFile)))
+                    newName += Path.GetExtension(OriginalFile);
                 NewName = newName;
                 DialogResult = true;
                 Close();
