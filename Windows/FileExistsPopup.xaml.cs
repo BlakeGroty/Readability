@@ -28,11 +28,28 @@ namespace Readability.Windows
         {
             InitializeComponent();
             Title = $"{Settings.Default.AppName} - File already exists";
-            TextBlock_Message.Text = $"A file named \"{Path.GetFileName(file)}\" has already been imported. What would you like to do?";
             Action = "none";
             NewName = "none";
             DockPanel_Rename.Visibility = Visibility.Collapsed;
-            TextBlock_Error.Visibility = Visibility.Collapsed;
+            TextBlock_Error.Visibility = Visibility.Hidden;
+
+            // Truncate file name to fix issues with TextBlock height
+            string name = Path.GetFileName(file);
+            TextBlock messageWidthTextBlock = new TextBlock()
+            {
+                FontSize = TextBlock_Message.FontSize,
+                FontWeight = TextBlock_Message.FontWeight,
+                FontFamily = TextBlock_Message.FontFamily,
+                FontStyle = TextBlock_Message.FontStyle,
+                Text = name
+            };
+            messageWidthTextBlock.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+            double messageWidth = messageWidthTextBlock.DesiredSize.Width;
+
+            double widthThreshold = 0.30 * Width;
+            if(messageWidth > widthThreshold)
+                name = name.Substring(0, (int)(widthThreshold * name.Length / messageWidth)) + "\u2026";
+            TextBlock_Message.Text = $"A file named \"{name}\" has already been imported. What would you like to do?"; ;
         }
 
         private void Button_Rename_Click(object sender, RoutedEventArgs e)
@@ -84,7 +101,7 @@ namespace Readability.Windows
 
         private void TextBox_NewName_TextChanged(object sender, TextChangedEventArgs e)
         {
-            TextBlock_Error.Visibility = Visibility.Collapsed;
+            TextBlock_Error.Visibility = Visibility.Hidden;
             Button_Confirm.BorderBrush = new SolidColorBrush(Color.FromRgb(112, 112, 112));
         }
     }
