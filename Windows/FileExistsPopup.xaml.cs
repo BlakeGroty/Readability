@@ -79,6 +79,8 @@ namespace Readability.Windows
         {
             Action = "rename";
             string newName = TextBox_NewName.Text.Trim();
+            if(!Path.GetExtension(newName).Equals(Path.GetExtension(OriginalFile)))
+                newName += Path.GetExtension(OriginalFile);
             string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Settings.Default.AnalysisFolderName, newName);
             bool isValidName = !string.IsNullOrEmpty(newName) && 
                                newName.IndexOfAny(Path.GetInvalidFileNameChars()) < 0;
@@ -86,8 +88,6 @@ namespace Readability.Windows
 
             if(isValidName && !fileExists)
             {
-                if(!Path.GetExtension(newName).Equals(Path.GetExtension(OriginalFile)))
-                    newName += Path.GetExtension(OriginalFile);
                 NewName = newName;
                 DialogResult = true;
                 Close();
