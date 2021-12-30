@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -82,8 +83,7 @@ namespace Readability.Windows
             if(!Path.GetExtension(newName).Equals(Path.GetExtension(OriginalFile)))
                 newName += Path.GetExtension(OriginalFile);
             string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Settings.Default.AnalysisFolderName, newName);
-            bool isValidName = !string.IsNullOrEmpty(newName) && 
-                               newName.IndexOfAny(Path.GetInvalidFileNameChars()) < 0;
+            bool isValidName = IsValidFileName(newName, out string message);
             bool fileExists = File.Exists(path);
 
             if(isValidName && !fileExists)
@@ -96,11 +96,46 @@ namespace Readability.Windows
             {
                 Button_Confirm.BorderBrush = Brushes.Red;
                 if(!isValidName)
-                    TextBlock_Error.Text = "Invalid file name. Please make sure your entry is not empty and does not contain any of the following characters: \\/:*?\"<>|";
+                    TextBlock_Error.Text = message;
                 if(fileExists)
                     TextBlock_Error.Text = "File already exists. Please choose a different name or option.";
                 TextBlock_Error.Visibility = Visibility.Visible;
             }
+        }
+
+        private static bool IsValidFileName(string name, out string osDependentMessage)
+        {
+            osDependentMessage = "Invalid file name. Please make sure your entry ";
+
+            //switch(Environment.OSVersion.Platform)
+            //{
+                //case PlatformID.Win32S:
+                //case PlatformID.Win32Windows:
+                //case PlatformID.Win32NT:
+                //case PlatformID.WinCE:
+                //case PlatformID.Xbox:
+                    if(name.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
+                    {
+                        osDependentMessage += "does not contain any of the following characters: \\/:*?\"<>|";
+                        return false;
+                    }
+                    if(Regex.IsMatch(name, @"^(CON|PRN|AUX|NUL|COM[1-9]|LPT[1-9])$", RegexOptions.IgnoreCase))
+                    {
+                        osDependentMessage += "is not an OS-reserved name.";
+                        return false;
+                    }
+                    return true;
+                //case PlatformID.Unix:
+                //case PlatformID.MacOSX:
+                //default:
+                //    if(name.Contains(":") || name.Contains("/"))
+                //    {
+                //        osDependentMessage += "does not contain any of the following characters: /:";
+                //        return false;
+                //    }
+                //    osDependentMessage = "";
+                //    return true;
+            //}
         }
 
         private void TextBox_NewName_TextChanged(object sender, TextChangedEventArgs e)
