@@ -50,17 +50,6 @@ namespace Readability {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Collections.Specialized.StringCollection RecentsList {
-            get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["RecentsList"]));
-            }
-            set {
-                this["RecentsList"] = value;
-            }
-        }
-        
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("wras")]
@@ -94,6 +83,15 @@ namespace Readability {
         public string PosModelLocation {
             get {
                 return ((string)(this["PosModelLocation"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Readability-416E616C79736973")]
+        public string AnalysisFolderName {
+            get {
+                return ((string)(this["AnalysisFolderName"]));
             }
         }
     }
